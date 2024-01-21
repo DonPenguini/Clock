@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+    <head>
+        <title>Digital Clock</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    
+    <style>
+        div{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin:auto;
+            margin-top: 300px;
+            font-size: 800%;
+            text-align: center;
+            color: #ffffff;
+            font-family: "Montserrat", sans-serif;
+        }
+        body {
+            background-color: rgb(4, 4, 4);
+            align-items: center;
+            text-align: center;
+        }
+        .button{
+            background-color: #000000;
+            border: 2px solid #626060;
+            border-radius: 4px;
+            color: white;
+            text-align: center;
+            display: inline-block;
+            font-size: 20px;
+            margin:auto;
+            cursor: pointer;
+            transition-duration: 0.4s;
+        }
+        .button:hover {
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            }
+    </style>
+    </head>
+    <body>
+        <div id="clock">
+            <p id="time"></p>;
+            <script>
+            let tout;
+            function toggle(){
+                var button=document.querySelector(".button");
+                button.classList.toggle("active");
+                clearTimeout(tout);
+                if(button.classList.contains("active")){
+                    Timeb();  
+                }
+                else{
+                    Timea();
+                }
+            }
+            function Timea() {
+                let date = new Date(); 
+                let hh = date.getHours();
+                let mm = date.getMinutes();
+                let ss = date.getSeconds();
+                let x="AM";
+                if(hh == 0){
+                    x = 12;
+                }
+                if(hh==12){
+                    x="PM";
+                }
+                if(hh > 12){
+                    hh = hh - 12;
+                    x="PM";
+                }
+
+                hh = (hh < 10) ? "0" + hh : hh;
+                mm = (mm < 10) ? "0" + mm : mm;
+                ss = (ss < 10) ? "0" + ss : ss;
+                    
+                let time = hh + ":" + mm + ":" + ss + " " + x ;
+                document.getElementById("clock").innerText = time; 
+                tout=setTimeout(function(){ Timea();}, 1000);
+                }
+
+            function Timeb(){
+                let date = new Date(); 
+                let hh = date.getHours();
+                let mm = date.getMinutes();
+                let ss = date.getSeconds();
+
+                hh = (hh < 10) ? "0" + hh : hh;
+                mm = (mm < 10) ? "0" + mm : mm;
+                ss = (ss < 10) ? "0" + ss : ss;
+                    
+                let time = hh + ":" + mm + ":" + ss ;
+                document.getElementById("clock").innerText= time; 
+                tout=setTimeout(function(){ Timeb(); }, 1000);
+            }
+            Timea();
+            </script>
+        </div>
+        <br>
+        <button onclick="toggle()" class="button">Switch</button>
+    </body>
+</html>
